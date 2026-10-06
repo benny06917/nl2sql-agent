@@ -1,0 +1,244 @@
+[
+  {
+    "id": "q01",
+    "difficulty": "easy",
+    "question": "How many customers are there?",
+    "gold_sql": "SELECT COUNT(*) FROM customers",
+    "expected": [
+      [
+        2000
+      ]
+    ]
+  },
+  {
+    "id": "q02",
+    "difficulty": "easy",
+    "question": "How many orders are there in total?",
+    "gold_sql": "SELECT COUNT(*) FROM orders",
+    "expected": [
+      [
+        5134
+      ]
+    ]
+  },
+  {
+    "id": "q03",
+    "difficulty": "easy",
+    "question": "How many orders have the status 'canceled'?",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE order_status = 'canceled'",
+    "expected": [
+      [
+        216
+      ]
+    ]
+  },
+  {
+    "id": "q04",
+    "difficulty": "easy",
+    "question": "What is the average review score across all reviews, rounded to 2 decimals?",
+    "gold_sql": "SELECT ROUND(AVG(review_score), 2) FROM reviews",
+    "expected": [
+      [
+        3.82
+      ]
+    ]
+  },
+  {
+    "id": "q05",
+    "difficulty": "easy",
+    "question": "Which payment type is used most often?",
+    "gold_sql": "SELECT payment_type FROM payments GROUP BY payment_type ORDER BY COUNT(*) DESC LIMIT 1",
+    "expected": [
+      [
+        "credit_card"
+      ]
+    ]
+  },
+  {
+    "id": "q06",
+    "difficulty": "easy",
+    "question": "How many distinct products are in the electronics category?",
+    "gold_sql": "SELECT COUNT(*) FROM products WHERE product_category = 'electronics'",
+    "expected": [
+      [
+        90
+      ]
+    ]
+  },
+  {
+    "id": "q07",
+    "difficulty": "easy",
+    "question": "Which city has the most customers?",
+    "gold_sql": "SELECT customer_city FROM customers GROUP BY customer_city ORDER BY COUNT(*) DESC LIMIT 1",
+    "expected": [
+      [
+        "New York"
+      ]
+    ]
+  },
+  {
+    "id": "q08",
+    "difficulty": "medium",
+    "question": "What is the total revenue from item prices (sum of price in order_items), rounded to the nearest dollar?",
+    "gold_sql": "SELECT ROUND(SUM(price), 0) FROM order_items",
+    "expected": [
+      [
+        2093918.0
+      ]
+    ]
+  },
+  {
+    "id": "q09",
+    "difficulty": "medium",
+    "question": "What are the top 3 product categories by total item price revenue?",
+    "gold_sql": "SELECT p.product_category FROM order_items oi JOIN products p ON p.product_id = oi.product_id GROUP BY p.product_category ORDER BY SUM(oi.price) DESC LIMIT 3",
+    "expected": [
+      [
+        "electronics"
+      ],
+      [
+        "furniture"
+      ],
+      [
+        "sports_leisure"
+      ]
+    ]
+  },
+  {
+    "id": "q10",
+    "difficulty": "medium",
+    "question": "How many orders were placed in 2024?",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE strftime('%Y', order_purchase_timestamp) = '2024'",
+    "expected": [
+      [
+        2831
+      ]
+    ]
+  },
+  {
+    "id": "q11",
+    "difficulty": "medium",
+    "question": "What is the average payment value per order, rounded to 2 decimals?",
+    "gold_sql": "SELECT ROUND(AVG(payment_value), 2) FROM payments",
+    "expected": [
+      [
+        438.88
+      ]
+    ]
+  },
+  {
+    "id": "q12",
+    "difficulty": "medium",
+    "question": "What is the average number of installments for credit card payments, rounded to 2 decimals?",
+    "gold_sql": "SELECT ROUND(AVG(payment_installments), 2) FROM payments WHERE payment_type = 'credit_card'",
+    "expected": [
+      [
+        3.42
+      ]
+    ]
+  },
+  {
+    "id": "q13",
+    "difficulty": "medium",
+    "question": "Which product category has the highest average item price?",
+    "gold_sql": "SELECT p.product_category FROM order_items oi JOIN products p ON p.product_id = oi.product_id GROUP BY p.product_category ORDER BY AVG(oi.price) DESC LIMIT 1",
+    "expected": [
+      [
+        "electronics"
+      ]
+    ]
+  },
+  {
+    "id": "q14",
+    "difficulty": "medium",
+    "question": "How many customers have placed more than one order?",
+    "gold_sql": "SELECT COUNT(*) FROM (SELECT customer_id FROM orders GROUP BY customer_id HAVING COUNT(*) > 1)",
+    "expected": [
+      [
+        1468
+      ]
+    ]
+  },
+  {
+    "id": "q15",
+    "difficulty": "medium",
+    "question": "What is the total item price revenue for each year (by order purchase year), rounded to the nearest dollar?",
+    "gold_sql": "SELECT strftime('%Y', o.order_purchase_timestamp) AS yr, ROUND(SUM(oi.price), 0) FROM orders o JOIN order_items oi ON oi.order_id = o.order_id GROUP BY yr ORDER BY yr",
+    "expected": [
+      [
+        "2023",
+        952497.0
+      ],
+      [
+        "2024",
+        1141421.0
+      ]
+    ]
+  },
+  {
+    "id": "q16",
+    "difficulty": "hard",
+    "question": "Among delivered orders that have a review, what is the average review score for late deliveries (delivered after the estimated delivery date) versus on-time deliveries, rounded to 2 decimals?",
+    "gold_sql": "SELECT CASE WHEN o.order_delivered_date > o.order_estimated_delivery_date THEN 'late' ELSE 'on_time' END AS d, ROUND(AVG(r.review_score), 2) FROM orders o JOIN reviews r ON r.order_id = o.order_id WHERE o.order_status = 'delivered' GROUP BY d ORDER BY d",
+    "expected": [
+      [
+        "late",
+        1.95
+      ],
+      [
+        "on_time",
+        4.44
+      ]
+    ]
+  },
+  {
+    "id": "q17",
+    "difficulty": "hard",
+    "question": "What percentage of delivered orders arrived late (delivered after the estimated delivery date), rounded to 1 decimal?",
+    "gold_sql": "SELECT ROUND(100.0 * SUM(order_delivered_date > order_estimated_delivery_date) / COUNT(*), 1) FROM orders WHERE order_status = 'delivered'",
+    "expected": [
+      [
+        24.7
+      ]
+    ]
+  },
+  {
+    "id": "q18",
+    "difficulty": "hard",
+    "question": "What is the average delivery time in days (delivered date minus purchase date) for delivered orders, rounded to 1 decimal?",
+    "gold_sql": "SELECT ROUND(AVG(julianday(order_delivered_date) - julianday(order_purchase_timestamp)), 1) FROM orders WHERE order_status = 'delivered'",
+    "expected": [
+      [
+        8.4
+      ]
+    ]
+  },
+  {
+    "id": "q19",
+    "difficulty": "hard",
+    "question": "Which 3 sellers generated the most item price revenue? Give their seller ids.",
+    "gold_sql": "SELECT seller_id FROM order_items GROUP BY seller_id ORDER BY SUM(price) DESC LIMIT 3",
+    "expected": [
+      [
+        33
+      ],
+      [
+        47
+      ],
+      [
+        71
+      ]
+    ]
+  },
+  {
+    "id": "q20",
+    "difficulty": "hard",
+    "question": "Which month (as YYYY-MM) had the most orders placed?",
+    "gold_sql": "SELECT strftime('%Y-%m', order_purchase_timestamp) AS m FROM orders GROUP BY m ORDER BY COUNT(*) DESC LIMIT 1",
+    "expected": [
+      [
+        "2024-10"
+      ]
+    ]
+  }
+]

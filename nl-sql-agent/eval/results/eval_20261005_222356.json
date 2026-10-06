@@ -1,0 +1,191 @@
+{
+  "model": "llama-3.3-70b-versatile",
+  "summary": {
+    "overall": [
+      0,
+      10
+    ],
+    "by_difficulty": {
+      "hard": [
+        0,
+        10
+      ]
+    },
+    "avg_attempts": 0,
+    "avg_latency_s": 0.06,
+    "recovered": 0,
+    "infra_errors": 10
+  },
+  "results": [
+    {
+      "id": "h01",
+      "difficulty": "hard",
+      "question": "How many orders contain more than one item? Return a single number.",
+      "expected": [
+        [
+          1526
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.13
+    },
+    {
+      "id": "h02",
+      "difficulty": "hard",
+      "question": "What is the average number of items per order, rounded to 2 decimals? Return a single number.",
+      "expected": [
+        [
+          1.37
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.04
+    },
+    {
+      "id": "h03",
+      "difficulty": "hard",
+      "question": "How many distinct customers have bought at least one electronics product? Return a single number.",
+      "expected": [
+        [
+          1227
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.05
+    },
+    {
+      "id": "h04",
+      "difficulty": "hard",
+      "question": "What is the total item price revenue from orders that were not canceled, rounded to the nearest dollar? Return a single number.",
+      "expected": [
+        [
+          2000333.0
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.04
+    },
+    {
+      "id": "h05",
+      "difficulty": "hard",
+      "question": "Which customer state has the highest total item price revenue? Return only the state code.",
+      "expected": [
+        [
+          "NY"
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.05
+    },
+    {
+      "id": "h06",
+      "difficulty": "hard",
+      "question": "What percentage of all orders received a review, rounded to 1 decimal? Return a single number.",
+      "expected": [
+        [
+          73.8
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.06
+    },
+    {
+      "id": "h07",
+      "difficulty": "hard",
+      "question": "How many delivered orders arrived more than 5 days after their estimated delivery date? Return a single number.",
+      "expected": [
+        [
+          568
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.06
+    },
+    {
+      "id": "h08",
+      "difficulty": "hard",
+      "question": "Among delivered orders that arrived after their estimated delivery date, how many received a review score of 1? Return a single number.",
+      "expected": [
+        [
+          388
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.06
+    },
+    {
+      "id": "h09",
+      "difficulty": "hard",
+      "question": "What is the average freight value per order item for orders paid by voucher, rounded to 2 decimals? Return a single number.",
+      "expected": [
+        [
+          22.7
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.05
+    },
+    {
+      "id": "h10",
+      "difficulty": "hard",
+      "question": "How many orders were placed by customers who have placed more than one order in total? Return a single number.",
+      "expected": [
+        [
+          4771
+        ]
+      ],
+      "sql": "",
+      "actual": [],
+      "attempts": 0,
+      "agent_error": "NotFoundError: Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "correct": false,
+      "infra_error": true,
+      "latency_s": 0.05
+    }
+  ]
+}

@@ -1,0 +1,619 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "summary": {
+    "overall": [
+      18,
+      20
+    ],
+    "by_difficulty": {
+      "easy": [
+        7,
+        7
+      ],
+      "medium": [
+        7,
+        8
+      ],
+      "hard": [
+        4,
+        5
+      ]
+    },
+    "avg_attempts": 1.0,
+    "avg_latency_s": 0.52,
+    "recovered": 0,
+    "infra_errors": 0
+  },
+  "results": [
+    {
+      "id": "q01",
+      "difficulty": "easy",
+      "question": "How many customers are there?",
+      "expected": [
+        [
+          2000
+        ]
+      ],
+      "sql": "SELECT COUNT(customer_id) AS customer_count FROM customers",
+      "actual": [
+        [
+          2000
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.39
+    },
+    {
+      "id": "q02",
+      "difficulty": "easy",
+      "question": "How many orders are there in total?",
+      "expected": [
+        [
+          5134
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS total_orders FROM orders",
+      "actual": [
+        [
+          5134
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.31
+    },
+    {
+      "id": "q03",
+      "difficulty": "easy",
+      "question": "How many orders have the status 'canceled'?",
+      "expected": [
+        [
+          216
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS canceled_order_count FROM orders WHERE order_status = 'canceled'",
+      "actual": [
+        [
+          216
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.75
+    },
+    {
+      "id": "q04",
+      "difficulty": "easy",
+      "question": "What is the average review score across all reviews, rounded to 2 decimals?",
+      "expected": [
+        [
+          3.82
+        ]
+      ],
+      "sql": "SELECT ROUND(AVG(review_score), 2) AS average_review_score FROM reviews",
+      "actual": [
+        [
+          3.82
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.33
+    },
+    {
+      "id": "q05",
+      "difficulty": "easy",
+      "question": "Which payment type is used most often?",
+      "expected": [
+        [
+          "credit_card"
+        ]
+      ],
+      "sql": "SELECT payment_type\nFROM payments\nGROUP BY payment_type\nORDER BY COUNT(*) DESC\nLIMIT 1",
+      "actual": [
+        [
+          "credit_card"
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.33
+    },
+    {
+      "id": "q06",
+      "difficulty": "easy",
+      "question": "How many distinct products are in the electronics category?",
+      "expected": [
+        [
+          90
+        ]
+      ],
+      "sql": "SELECT COUNT(DISTINCT product_id) AS distinct_product_count FROM products WHERE product_category = 'electronics'",
+      "actual": [
+        [
+          90
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.32
+    },
+    {
+      "id": "q07",
+      "difficulty": "easy",
+      "question": "Which city has the most customers?",
+      "expected": [
+        [
+          "New York"
+        ]
+      ],
+      "sql": "SELECT customer_city\nFROM customers\nGROUP BY customer_city\nORDER BY COUNT(customer_id) DESC\nLIMIT 1",
+      "actual": [
+        [
+          "New York"
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.68
+    },
+    {
+      "id": "q08",
+      "difficulty": "medium",
+      "question": "What is the total revenue from item prices (sum of price in order_items), rounded to the nearest dollar?",
+      "expected": [
+        [
+          2093918.0
+        ]
+      ],
+      "sql": "SELECT ROUND(SUM(price)) AS total_revenue\nFROM order_items",
+      "actual": [
+        [
+          2093918.0
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.85
+    },
+    {
+      "id": "q09",
+      "difficulty": "medium",
+      "question": "What are the top 3 product categories by total item price revenue?",
+      "expected": [
+        [
+          "electronics"
+        ],
+        [
+          "furniture"
+        ],
+        [
+          "sports_leisure"
+        ]
+      ],
+      "sql": "SELECT \n    p.product_category,\n    SUM(oi.price) AS total_revenue\nFROM \n    order_items oi\nJOIN \n    products p ON oi.product_id = p.product_id\nGROUP BY \n    p.product_category\nORDER BY \n    total_revenue DESC\nLIMIT 3",
+      "actual": [
+        [
+          "electronics",
+          1290651.0
+        ],
+        [
+          "furniture",
+          222601.19
+        ],
+        [
+          "sports_leisure",
+          219959.17
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.89
+    },
+    {
+      "id": "q10",
+      "difficulty": "medium",
+      "question": "How many orders were placed in 2024?",
+      "expected": [
+        [
+          2831
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS order_count\nFROM orders\nWHERE order_purchase_timestamp LIKE '2024%'",
+      "actual": [
+        [
+          2831
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.6
+    },
+    {
+      "id": "q11",
+      "difficulty": "medium",
+      "question": "What is the average payment value per order, rounded to 2 decimals?",
+      "expected": [
+        [
+          438.88
+        ]
+      ],
+      "sql": "SELECT ROUND(AVG(payment_value), 2) AS average_payment_value\nFROM payments",
+      "actual": [
+        [
+          438.88
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.35
+    },
+    {
+      "id": "q12",
+      "difficulty": "medium",
+      "question": "What is the average number of installments for credit card payments, rounded to 2 decimals?",
+      "expected": [
+        [
+          3.42
+        ]
+      ],
+      "sql": "SELECT ROUND(AVG(payment_installments), 2) AS avg_installments\nFROM payments\nWHERE payment_type = 'credit_card'",
+      "actual": [
+        [
+          3.42
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.81
+    },
+    {
+      "id": "q13",
+      "difficulty": "medium",
+      "question": "Which product category has the highest average item price?",
+      "expected": [
+        [
+          "electronics"
+        ]
+      ],
+      "sql": "SELECT p.product_category\nFROM products p\nJOIN order_items oi ON p.product_id = oi.product_id\nGROUP BY p.product_category\nORDER BY AVG(oi.price) DESC\nLIMIT 1",
+      "actual": [
+        [
+          "electronics"
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.48
+    },
+    {
+      "id": "q14",
+      "difficulty": "medium",
+      "question": "How many customers have placed more than one order?",
+      "expected": [
+        [
+          1468
+        ]
+      ],
+      "sql": "SELECT COUNT(DISTINCT o.customer_id) AS customer_count\nFROM orders o\nGROUP BY o.customer_id\nHAVING COUNT(o.order_id) > 1",
+      "actual": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": false,
+      "latency_s": 0.43
+    },
+    {
+      "id": "q15",
+      "difficulty": "medium",
+      "question": "What is the total item price revenue for each year (by order purchase year), rounded to the nearest dollar?",
+      "expected": [
+        [
+          "2023",
+          952497.0
+        ],
+        [
+          "2024",
+          1141421.0
+        ]
+      ],
+      "sql": "SELECT \n    strftime('%Y', o.order_purchase_timestamp) AS order_year,\n    ROUND(SUM(oi.price)) AS total_item_price_revenue\nFROM \n    orders o\nJOIN \n    order_items oi ON o.order_id = oi.order_id\nGROUP BY \n    order_year",
+      "actual": [
+        [
+          "2023",
+          952497.0
+        ],
+        [
+          "2024",
+          1141421.0
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.57
+    },
+    {
+      "id": "q16",
+      "difficulty": "hard",
+      "question": "Among delivered orders that have a review, what is the average review score for late deliveries (delivered after the estimated delivery date) versus on-time deliveries, rounded to 2 decimals?",
+      "expected": [
+        [
+          "late",
+          1.95
+        ],
+        [
+          "on_time",
+          4.44
+        ]
+      ],
+      "sql": "SELECT \n    ROUND(AVG(CASE WHEN o.order_delivered_date > o.order_estimated_delivery_date THEN r.review_score END), 2) AS avg_late_score,\n    ROUND(AVG(CASE WHEN o.order_delivered_date <= o.order_estimated_delivery_date THEN r.review_score END), 2) AS avg_ontime_score\nFROM orders o\nJOIN reviews r ON o.order_id = r.order_id\nWHERE o.order_status = 'delivered'",
+      "actual": [
+        [
+          1.95,
+          4.44
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": false,
+      "latency_s": 0.68
+    },
+    {
+      "id": "q17",
+      "difficulty": "hard",
+      "question": "What percentage of delivered orders arrived late (delivered after the estimated delivery date), rounded to 1 decimal?",
+      "expected": [
+        [
+          24.7
+        ]
+      ],
+      "sql": "SELECT\n  ROUND(\n    100.0 * SUM(CASE WHEN order_delivered_date > order_estimated_delivery_date THEN 1 ELSE 0 END) /\n    COUNT(*),\n    1\n  ) AS late_percentage\nFROM orders\nWHERE order_status = 'delivered'",
+      "actual": [
+        [
+          24.7
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.44
+    },
+    {
+      "id": "q18",
+      "difficulty": "hard",
+      "question": "What is the average delivery time in days (delivered date minus purchase date) for delivered orders, rounded to 1 decimal?",
+      "expected": [
+        [
+          8.4
+        ]
+      ],
+      "sql": "SELECT ROUND(AVG(julianday(o.order_delivered_date) - julianday(o.order_purchase_timestamp)), 1) AS avg_delivery_days\nFROM orders o\nWHERE o.order_delivered_date IS NOT NULL",
+      "actual": [
+        [
+          8.4
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.43
+    },
+    {
+      "id": "q19",
+      "difficulty": "hard",
+      "question": "Which 3 sellers generated the most item price revenue? Give their seller ids.",
+      "expected": [
+        [
+          33
+        ],
+        [
+          47
+        ],
+        [
+          71
+        ]
+      ],
+      "sql": "SELECT seller_id\nFROM order_items\nGROUP BY seller_id\nORDER BY SUM(price) DESC\nLIMIT 3",
+      "actual": [
+        [
+          33
+        ],
+        [
+          47
+        ],
+        [
+          71
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.37
+    },
+    {
+      "id": "q20",
+      "difficulty": "hard",
+      "question": "Which month (as YYYY-MM) had the most orders placed?",
+      "expected": [
+        [
+          "2024-10"
+        ]
+      ],
+      "sql": "SELECT\n    strftime('%Y-%m', order_purchase_timestamp) AS order_month\nFROM\n    orders\nGROUP BY\n    order_month\nORDER BY\n    COUNT(*) DESC\nLIMIT 1",
+      "actual": [
+        [
+          "2024-10"
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.38
+    }
+  ]
+}

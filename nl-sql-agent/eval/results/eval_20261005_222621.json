@@ -1,0 +1,221 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "summary": {
+    "overall": [
+      10,
+      10
+    ],
+    "by_difficulty": {
+      "hard": [
+        10,
+        10
+      ]
+    },
+    "avg_attempts": 1.1,
+    "avg_latency_s": 0.64,
+    "recovered": 1,
+    "infra_errors": 0
+  },
+  "results": [
+    {
+      "id": "h01",
+      "difficulty": "hard",
+      "question": "How many orders contain more than one item? Return a single number.",
+      "expected": [
+        [
+          1526
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS order_count\nFROM (\n    SELECT order_id\n    FROM order_items\n    GROUP BY order_id\n    HAVING COUNT(order_item_id) > 1\n) AS multi_item_orders",
+      "actual": [
+        [
+          1526
+        ]
+      ],
+      "attempts": 2,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 1.06
+    },
+    {
+      "id": "h02",
+      "difficulty": "hard",
+      "question": "What is the average number of items per order, rounded to 2 decimals? Return a single number.",
+      "expected": [
+        [
+          1.37
+        ]
+      ],
+      "sql": "SELECT ROUND(COUNT(*) * 1.0 / COUNT(DISTINCT order_id), 2) AS avg_items_per_order\nFROM order_items",
+      "actual": [
+        [
+          1.37
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.53
+    },
+    {
+      "id": "h03",
+      "difficulty": "hard",
+      "question": "How many distinct customers have bought at least one electronics product? Return a single number.",
+      "expected": [
+        [
+          1227
+        ]
+      ],
+      "sql": "SELECT COUNT(DISTINCT o.customer_id)\nFROM orders o\nJOIN order_items oi ON o.order_id = oi.order_id\nJOIN products p ON oi.product_id = p.product_id\nWHERE p.product_category = 'electronics'",
+      "actual": [
+        [
+          1227
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.73
+    },
+    {
+      "id": "h04",
+      "difficulty": "hard",
+      "question": "What is the total item price revenue from orders that were not canceled, rounded to the nearest dollar? Return a single number.",
+      "expected": [
+        [
+          2000333.0
+        ]
+      ],
+      "sql": "SELECT ROUND(SUM(oi.price)) AS total_revenue\nFROM order_items oi\nJOIN orders o ON oi.order_id = o.order_id\nWHERE o.order_status != 'canceled'",
+      "actual": [
+        [
+          2000333.0
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.61
+    },
+    {
+      "id": "h05",
+      "difficulty": "hard",
+      "question": "Which customer state has the highest total item price revenue? Return only the state code.",
+      "expected": [
+        [
+          "NY"
+        ]
+      ],
+      "sql": "SELECT c.customer_state\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nJOIN order_items oi ON o.order_id = oi.order_id\nGROUP BY c.customer_state\nORDER BY SUM(oi.price) DESC\nLIMIT 1",
+      "actual": [
+        [
+          "NY"
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.55
+    },
+    {
+      "id": "h06",
+      "difficulty": "hard",
+      "question": "What percentage of all orders received a review, rounded to 1 decimal? Return a single number.",
+      "expected": [
+        [
+          73.8
+        ]
+      ],
+      "sql": "SELECT ROUND(100.0 * COUNT(DISTINCT r.order_id) / COUNT(DISTINCT o.order_id), 1) AS percentage\nFROM orders o\nLEFT JOIN reviews r ON o.order_id = r.order_id",
+      "actual": [
+        [
+          73.8
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.57
+    },
+    {
+      "id": "h07",
+      "difficulty": "hard",
+      "question": "How many delivered orders arrived more than 5 days after their estimated delivery date? Return a single number.",
+      "expected": [
+        [
+          568
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS delivered_late_count\nFROM orders\nWHERE order_status = 'delivered'\n  AND order_delivered_date IS NOT NULL\n  AND order_estimated_delivery_date IS NOT NULL\n  AND julianday(order_delivered_date) - julianday(order_estimated_delivery_date) > 5",
+      "actual": [
+        [
+          568
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.59
+    },
+    {
+      "id": "h08",
+      "difficulty": "hard",
+      "question": "Among delivered orders that arrived after their estimated delivery date, how many received a review score of 1? Return a single number.",
+      "expected": [
+        [
+          388
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS count\nFROM orders o\nJOIN reviews r ON o.order_id = r.order_id\nWHERE o.order_status = 'delivered'\n  AND o.order_delivered_date > o.order_estimated_delivery_date\n  AND r.review_score = 1",
+      "actual": [
+        [
+          388
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.59
+    },
+    {
+      "id": "h09",
+      "difficulty": "hard",
+      "question": "What is the average freight value per order item for orders paid by voucher, rounded to 2 decimals? Return a single number.",
+      "expected": [
+        [
+          22.7
+        ]
+      ],
+      "sql": "SELECT ROUND(AVG(oi.freight_value), 2) AS avg_freight_value\nFROM order_items oi\nJOIN orders o ON oi.order_id = o.order_id\nJOIN payments p ON o.order_id = p.order_id\nWHERE p.payment_type = 'voucher'",
+      "actual": [
+        [
+          22.7
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.54
+    },
+    {
+      "id": "h10",
+      "difficulty": "hard",
+      "question": "How many orders were placed by customers who have placed more than one order in total? Return a single number.",
+      "expected": [
+        [
+          4771
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS order_count\nFROM orders o\nJOIN (\n    SELECT customer_id\n    FROM orders\n    GROUP BY customer_id\n    HAVING COUNT(*) > 1\n) c ON o.customer_id = c.customer_id",
+      "actual": [
+        [
+          4771
+        ]
+      ],
+      "attempts": 1,
+      "agent_error": null,
+      "correct": true,
+      "latency_s": 0.58
+    }
+  ]
+}

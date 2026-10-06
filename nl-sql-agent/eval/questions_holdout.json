@@ -1,0 +1,112 @@
+[
+  {
+    "id": "h01",
+    "difficulty": "hard",
+    "question": "How many orders contain more than one item? Return a single number.",
+    "gold_sql": "SELECT COUNT(*) FROM (SELECT order_id FROM order_items GROUP BY order_id HAVING COUNT(*) > 1)",
+    "expected": [
+      [
+        1526
+      ]
+    ]
+  },
+  {
+    "id": "h02",
+    "difficulty": "hard",
+    "question": "What is the average number of items per order, rounded to 2 decimals? Return a single number.",
+    "gold_sql": "SELECT ROUND(1.0 * COUNT(*) / COUNT(DISTINCT order_id), 2) FROM order_items",
+    "expected": [
+      [
+        1.37
+      ]
+    ]
+  },
+  {
+    "id": "h03",
+    "difficulty": "hard",
+    "question": "How many distinct customers have bought at least one electronics product? Return a single number.",
+    "gold_sql": "SELECT COUNT(DISTINCT o.customer_id) FROM orders o JOIN order_items oi ON oi.order_id = o.order_id JOIN products p ON p.product_id = oi.product_id WHERE p.product_category = 'electronics'",
+    "expected": [
+      [
+        1227
+      ]
+    ]
+  },
+  {
+    "id": "h04",
+    "difficulty": "hard",
+    "question": "What is the total item price revenue from orders that were not canceled, rounded to the nearest dollar? Return a single number.",
+    "gold_sql": "SELECT ROUND(SUM(oi.price), 0) FROM order_items oi JOIN orders o ON o.order_id = oi.order_id WHERE o.order_status != 'canceled'",
+    "expected": [
+      [
+        2000333.0
+      ]
+    ]
+  },
+  {
+    "id": "h05",
+    "difficulty": "hard",
+    "question": "Which customer state has the highest total item price revenue? Return only the state code.",
+    "gold_sql": "SELECT c.customer_state FROM customers c JOIN orders o ON o.customer_id = c.customer_id JOIN order_items oi ON oi.order_id = o.order_id GROUP BY c.customer_state ORDER BY SUM(oi.price) DESC LIMIT 1",
+    "expected": [
+      [
+        "NY"
+      ]
+    ]
+  },
+  {
+    "id": "h06",
+    "difficulty": "hard",
+    "question": "What percentage of all orders received a review, rounded to 1 decimal? Return a single number.",
+    "gold_sql": "SELECT ROUND(100.0 * (SELECT COUNT(DISTINCT order_id) FROM reviews) / (SELECT COUNT(*) FROM orders), 1)",
+    "expected": [
+      [
+        73.8
+      ]
+    ]
+  },
+  {
+    "id": "h07",
+    "difficulty": "hard",
+    "question": "How many delivered orders arrived more than 5 days after their estimated delivery date? Return a single number.",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE order_status = 'delivered' AND julianday(order_delivered_date) - julianday(order_estimated_delivery_date) > 5",
+    "expected": [
+      [
+        568
+      ]
+    ]
+  },
+  {
+    "id": "h08",
+    "difficulty": "hard",
+    "question": "Among delivered orders that arrived after their estimated delivery date, how many received a review score of 1? Return a single number.",
+    "gold_sql": "SELECT COUNT(*) FROM orders o JOIN reviews r ON r.order_id = o.order_id WHERE o.order_status = 'delivered' AND o.order_delivered_date > o.order_estimated_delivery_date AND r.review_score = 1",
+    "expected": [
+      [
+        388
+      ]
+    ]
+  },
+  {
+    "id": "h09",
+    "difficulty": "hard",
+    "question": "What is the average freight value per order item for orders paid by voucher, rounded to 2 decimals? Return a single number.",
+    "gold_sql": "SELECT ROUND(AVG(oi.freight_value), 2) FROM order_items oi JOIN payments p ON p.order_id = oi.order_id WHERE p.payment_type = 'voucher'",
+    "expected": [
+      [
+        22.7
+      ]
+    ]
+  },
+  {
+    "id": "h10",
+    "difficulty": "hard",
+    "question": "How many orders were placed by customers who have placed more than one order in total? Return a single number.",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE customer_id IN (SELECT customer_id FROM orders GROUP BY customer_id HAVING COUNT(*) > 1)",
+    "expected": [
+      [
+        4771
+      ]
+    ]
+  }
+]

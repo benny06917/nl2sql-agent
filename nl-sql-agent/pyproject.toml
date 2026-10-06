@@ -1,0 +1,9 @@
+[project]
+name = "retail-sql-agent"
+version = "0.1.0"
+description = "A natural-language-to-SQL agent with self-correction, over a synthetic retail database."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
